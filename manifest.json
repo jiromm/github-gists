@@ -1,0 +1,20 @@
+{
+	"name": "Github gists",
+	"description": "Simple view for github gists",
+	"manifest_version": 2,
+	"version": "1.0",
+
+	"icons": {
+		"24": "assets/24.png",
+		"128": "assets/128.png"
+	},
+
+	"browser_action": {
+		"default_icon": "assets/icon.png",
+		"default_popup": "popup.html"
+	},
+
+	"permissions": [
+		"storage"
+	]
+}
