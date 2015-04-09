@@ -1,0 +1,14 @@
+.wrapper {
+	width: 400px;
+}
+.auth .form-group,
+.auth .form-control {
+	display: inline-block;
+}
+.auth .form-control {
+	width: 171px;
+}
+.avatar {
+	width: 20px;
+	height: 20px;
+}

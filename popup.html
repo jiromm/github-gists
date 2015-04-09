@@ -1,13 +1,51 @@
 <html>
 	<head>
-		<link rel="stylesheet" href="css/popup.css">
 		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/popup.css">
 	</head>
-	<body>
-		<div class="container wrapper">
-			<div class="row">
-				<div class="col-sm-12">
-					nothing yet
+	<body class="wrapper">
+		<div class="container">
+			<div class="row auth">
+				<div class="col-xs-12">
+					<h3>Indentify yourself</h3>
+					<p>You need to write down your github account id to be able to view your gists</p>
+				</div>
+
+				<div class="col-xs-12 text-right">
+					<div class="form-inline">
+						<div class="form-group">
+							<label class="text-muted">https://github.com/</label>
+							<input type="text" class="form-control input-sm login-field" placeholder="github_id">
+						</div>
+						<button type="submit" class="btn btn-sm btn-default login-submit">Submit</button>
+					</div>
+				</div>
+
+				<div class="col-xs-12">
+					<p class="login-error-message text-danger hide"></p>
+				</div>
+			</div>
+
+			<div class="gist-container hide">
+				<div class="row">
+					<div class="col-xs-6">
+						<strong>Github</strong>Gists
+					</div>
+					<div class="col-xs-6">
+						<img class="avatar"> <strong class="login"></strong>
+					</div>
+				</div>
+
+				<hr>
+
+				<div class="row">
+					<div class="col-xs-12">
+						<ul class="list-unstyled">
+							<li>Gist 1</li>
+							<li>Gist 2</li>
+							<li>...</li>
+						</ul>
+					</div>
 				</div>
 			</div>
 		</div>
