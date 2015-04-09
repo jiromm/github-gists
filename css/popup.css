@@ -8,6 +8,20 @@
 .identify .form-control {
 	width: 171px;
 }
+.profile a {
+	text-decoration: none;
+}
+.profile {
+	margin: -4px -4px 0 0;
+	padding: 4px;
+}
+.profile:hover,
+.profile.open {
+	background: #e9e9e9;
+}
+.profile .login:hover {
+	text-decoration: underline;
+}
 .avatar {
 	width: 20px;
 	height: 20px;
@@ -17,4 +31,7 @@
 }
 .panel-heading {
 	padding: 10px 0;
+}
+.gist-container {
+	min-height: 150px;
 }

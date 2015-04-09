@@ -8,6 +8,10 @@ $(function() {
 		$login = $('.login'),
 		$avatar = $('.avatar'),
 
+		$fnOpenGists = $('.fn-open-gists'),
+		$fnRefreshList = $('.fn-refresh-list'),
+		$fnChangeAccount = $('.fn-change-account'),
+
 		o = function(property, value) {
 			if (value == undefined) {
 				return localStorage.getItem(property);
@@ -22,6 +26,9 @@ $(function() {
 		getGistsUrl = function(login) {
 			return 'https://api.github.com/users/:login/gists'.replace(':login', login);
 		},
+		getOnlineGistsUrl = function(login) {
+			return 'https://gist.github.com/:login'.replace(':login', login);
+		},
 
 		freezeButton = function(button, text) {
 			button.attr('disabled', true).text(
@@ -33,10 +40,13 @@ $(function() {
 		};
 
 	$gistContainer.on('isIdentified', function() {
+		var login = o('login');
+
 		$gistContainer.removeClass('hide');
 		$auth.addClass('hide');
-		$login.text(o('login'));
+		$login.text(login);
 		$avatar.attr('src', o('avatar'));
+		$fnOpenGists.attr('href', getOnlineGistsUrl(login));
 
 		console.log(o('profileJSON').avatar_url);
 	});
@@ -44,6 +54,8 @@ $(function() {
 	if (o('isIdentified')) {
 		$gistContainer.trigger('isIdentified');
 	} else {
+		$loginField.focus();
+
 		$loginSubmit.on('click', function(e) {
 			e.preventDefault();
 
@@ -60,7 +72,7 @@ $(function() {
 						localStorage.setItem('isIdentified', true);
 						localStorage.setItem('login', login);
 						localStorage.setItem('avatar', json.avatar_url);
-						localStorage.setItem('profileJSON', json);
+						localStorage.setItem('profileJSON', JSON.stringify(json));
 
 						$gistContainer.trigger('isIdentified');
 					})
