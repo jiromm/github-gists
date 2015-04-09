@@ -48,7 +48,24 @@ $(function() {
 		$avatar.attr('src', o('avatar'));
 		$fnOpenGists.attr('href', getOnlineGistsUrl(login));
 
-		console.log(o('profileJSON').avatar_url);
+		if (o('haveGists')) {
+			$(this).trigger('loadGists');
+		} else {
+			$(this).trigger('downloadGists', [function() {
+				$(this).trigger('loadGists');
+			}]);
+		}
+
+		$(this).on('loadGists', function() {
+
+		});
+
+		$(this).on('downloadGists', function(e, callback) {
+
+			if (callback instanceof Function) {
+				callback();
+			}
+		});
 	});
 
 	if (o('isIdentified')) {
@@ -69,10 +86,10 @@ $(function() {
 
 				$.getJSON(getProfileUrl(login))
 					.done(function(json) {
-						localStorage.setItem('isIdentified', true);
-						localStorage.setItem('login', login);
-						localStorage.setItem('avatar', json.avatar_url);
-						localStorage.setItem('profileJSON', JSON.stringify(json));
+						o('isIdentified', true);
+						o('login', login);
+						o('avatar', json.avatar_url);
+						o('profileJSON', JSON.stringify(json));
 
 						$gistContainer.trigger('isIdentified');
 					})
