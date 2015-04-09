@@ -1,14 +1,20 @@
 .wrapper {
 	width: 400px;
 }
-.auth .form-group,
-.auth .form-control {
+.identify .form-group,
+.identify .form-control {
 	display: inline-block;
 }
-.auth .form-control {
+.identify .form-control {
 	width: 171px;
 }
 .avatar {
 	width: 20px;
 	height: 20px;
+}
+.heading-delimiter {
+	margin: 0 0 10px 0;
+}
+.panel-heading {
+	padding: 10px 0;
 }
