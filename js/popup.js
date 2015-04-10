@@ -23,6 +23,10 @@ $(function() {
 			return localStorage.setItem(property, value);
 		},
 
+		_o = function(property) {
+			return localStorage.removeItem(property);
+		},
+
 		getProfileUrl = function(login) {
 			return 'https://api.github.com/users/:login'.replace(':login', login);
 		},
@@ -100,6 +104,19 @@ $(function() {
 		$(this).on('loadGists', function() {
 			$errorMessage.addClass('hide');
 			$gists.removeClass('hide');
+		});
+
+		$fnChangeAccount.on('click', function(e) {
+			e.preventDefault();
+
+			_o('isIdentified');
+			_o('login');
+			_o('avatar');
+			_o('profileJSON');
+			_o('haveGists');
+			_o('gists');
+
+			location.reload();
 		});
 
 		if (o('haveGists')) {

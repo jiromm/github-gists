@@ -55,6 +55,8 @@
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
+	text-shadow: -1px 1px 0 #fff;
+	transition: all 0.2s;
 }
 .gists li:hover {
 	background: #e8e8e8;
