@@ -84,11 +84,11 @@ $(function() {
 				})
 				.always(function() {
 					$self.trigger('loadingStop');
-				});
 
-			if (callback instanceof Function) {
-				callback();
-			}
+					if (callback instanceof Function) {
+						callback();
+					}
+				});
 		});
 
 		$(this).on('loadingStart', function() {
@@ -117,6 +117,14 @@ $(function() {
 			_o('gists');
 
 			location.reload();
+		});
+
+		$fnRefreshList.on('click', function(e) {
+			e.preventDefault();
+
+			$(this).trigger('downloadGists', [function() {
+				$self.trigger('loadGists');
+			}]);
 		});
 
 		if (o('haveGists')) {

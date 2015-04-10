@@ -42,7 +42,9 @@
 .gist-container {
 	min-height: 150px;
 }
-.gists {
+.gists,
+.loading,
+.error-message {
 	margin-top: 47px;
 }
 .gists li {
