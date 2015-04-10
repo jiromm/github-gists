@@ -7,6 +7,9 @@ $(function() {
 		$loginErrorMessage = $('.login-error-message'),
 		$login = $('.login'),
 		$avatar = $('.avatar'),
+		$gists = $('.gists'),
+		$loading = $('.loading'),
+		$errorMessage = $('.error-message'),
 
 		$fnOpenGists = $('.fn-open-gists'),
 		$fnRefreshList = $('.fn-refresh-list'),
@@ -40,7 +43,8 @@ $(function() {
 		};
 
 	$gistContainer.on('isIdentified', function() {
-		var login = o('login');
+		var $self = $(this),
+			login = o('login');
 
 		$gistContainer.removeClass('hide');
 		$auth.addClass('hide');
@@ -48,24 +52,63 @@ $(function() {
 		$avatar.attr('src', o('avatar'));
 		$fnOpenGists.attr('href', getOnlineGistsUrl(login));
 
-		if (o('haveGists')) {
-			$(this).trigger('loadGists');
-		} else {
-			$(this).trigger('downloadGists', [function() {
-				$(this).trigger('loadGists');
-			}]);
-		}
-
-		$(this).on('loadGists', function() {
-
+		$(this).on('showError', function(e, message) {
+			$gists.addClass('hide');
+			$errorMessage.removeClass('hide');
+			$errorMessage.find('p').html(message);
 		});
 
 		$(this).on('downloadGists', function(e, callback) {
+			$self.trigger('loadingStart');
+
+			$.getJSON(getGistsUrl(login))
+				.done(function(json) {
+					if (json.length) {
+						$gists.find('ul').html('');
+
+						for (var gist in json) {
+							if (json.hasOwnProperty(gist)) {
+								$gists.find('ul').append('<li>' + json[gist].description + '</li>')
+							}
+						}
+					} else {
+						$self.trigger('showError', ['You have no gists. <a href="' + getOnlineGistsUrl(login) + '" target="_blank">Add First One</a>.']);
+					}
+				})
+				.fail(function(jqxhr, textStatus, error) {
+					$self.trigger('showError', ['Something went wrong']);
+				})
+				.always(function() {
+					$self.trigger('loadingStop');
+				});
 
 			if (callback instanceof Function) {
 				callback();
 			}
 		});
+
+		$(this).on('loadingStart', function() {
+			$gists.addClass('hide');
+			$errorMessage.addClass('hide');
+			$loading.removeClass('hide');
+		});
+
+		$(this).on('loadingStop', function() {
+			$loading.addClass('hide');
+		});
+
+		$(this).on('loadGists', function() {
+			$errorMessage.addClass('hide');
+			$gists.removeClass('hide');
+		});
+
+		if (o('haveGists')) {
+			$(this).trigger('loadGists');
+		} else {
+			$(this).trigger('downloadGists', [function() {
+				$self.trigger('loadGists');
+			}]);
+		}
 	});
 
 	if (o('isIdentified')) {
