@@ -15,6 +15,7 @@ $(function() {
 		$loading = $('.loading'),
 		$errorMessage = $('.error-message'),
 
+		$fnOpenGist = $('.fn-open-gist'),
 		$fnOpenGists = $('.fn-open-gists'),
 		$fnRefreshList = $('.fn-refresh-list'),
 		$fnChangeAccount = $('.fn-change-account'),
@@ -81,7 +82,7 @@ $(function() {
 		},
 		getFileTemplate = function(title, content) {
 			return '\
-				<div class="panel panel-primary">\
+				<div class="panel panel-default">\
 					<div class="panel-heading">' + htmlEntities(title) + '</div>\
 					<div class="panel-body">\
 						<pre>' + htmlEntities(content) + '</pre>\
@@ -235,6 +236,8 @@ $(function() {
 				if (json.hasOwnProperty(gist)) {
 					if (json[gist].id == gistId) {
 						$description.text(json[gist].description);
+						$fnOpenGist.attr('href', json[gist].html_url);
+
 						$(this).trigger('drawFiles', [json[gist].files]);
 
 						break;

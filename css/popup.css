@@ -4,7 +4,7 @@
 	max-width: 768px;
 }
 .autowidth {
-	width: auto;
+	width: 768px;
 }
 .heading {
 	position: fixed;
