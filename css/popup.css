@@ -2,6 +2,7 @@
 	width: 400px;
 	min-width: 400px;
 	max-width: 768px;
+	margin: 47px 0 41px 0;
 }
 .autowidth {
 	width: 768px;
@@ -9,12 +10,26 @@
 .heading {
 	position: fixed;
 	z-index: 1;
-	display: block;
+	top: 0;
 	width: 100%;
+	display: block;
 	background: #fff;
 }
 .heading .panel-heading {
 	padding: 10px 0;
+}
+.footer {
+	position: fixed;
+	z-index: 1;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	background: #fff;
+}
+.footer p {
+	margin: 0;
+	padding: 14px;
+	line-height: 100%;
 }
 .identify .form-group,
 .identify .form-control {
@@ -47,11 +62,8 @@
 .gist-container {
 	min-height: 150px;
 }
-.gists,
-.gist,
-.loading,
-.error-message {
-	margin-top: 47px;
+.gists ul {
+	margin-bottom: 0;
 }
 .gists li {
 	position: relative;
