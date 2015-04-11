@@ -1,5 +1,6 @@
 $(function() {
-	var $auth = $('.identify'),
+	var $wrapper = $('.wrapper'),
+		$auth = $('.identify'),
 		$gistContainer = $('.gist-container'),
 
 		$loginSubmit = $('.login-submit'),
@@ -28,6 +29,10 @@ $(function() {
 
 		_o = function(property) {
 			return localStorage.removeItem(property);
+		},
+
+		htmlEntities = function(str) {
+			return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 		},
 
 		getProfileUrl = function(login) {
@@ -77,9 +82,9 @@ $(function() {
 		getFileTemplate = function(title, content) {
 			return '\
 				<div class="panel panel-primary">\
-					<div class="panel-heading">' + title + '</div>\
+					<div class="panel-heading">' + htmlEntities(title) + '</div>\
 					<div class="panel-body">\
-						<code>' + content + '</code>\
+						<pre>' + htmlEntities(content) + '</pre>\
 					</div>\
 				</div>'
 		};
@@ -212,15 +217,19 @@ $(function() {
 
 			for (var file in files) {
 				if (files.hasOwnProperty(file)) {
-					fileTemplate = getFileTemplate(files[file].filename, 'xxxxxxxxxxx');
+					$.get(files[file].raw_url, function(data) {
+						fileTemplate = getFileTemplate(files[file].filename, data);
 
-					$files.append(fileTemplate);
+						$files.append(fileTemplate);
+					});
 				}
 			}
 		});
 
 		$gist.on('drawGist', function(e, gistId) {
 			var json = JSON.parse(o('gists'));
+
+			$wrapper.addClass('autowidth');
 
 			for (var gist in json) {
 				if (json.hasOwnProperty(gist)) {
@@ -246,6 +255,7 @@ $(function() {
 		$gist.on('click', '.back', function(e) {
 			e.preventDefault();
 
+			$wrapper.removeClass('autowidth');
 			$gists.removeClass('hide');
 			$gist.addClass('hide');
 		});

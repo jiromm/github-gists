@@ -1,5 +1,10 @@
 .wrapper {
 	width: 400px;
+	min-width: 400px;
+	max-width: 768px;
+}
+.autowidth {
+	width: auto;
 }
 .heading {
 	position: fixed;
