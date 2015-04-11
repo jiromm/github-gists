@@ -72,7 +72,13 @@ $(function() {
 
 						for (var gist in json) {
 							if (json.hasOwnProperty(gist)) {
-								$gists.find('ul').append('<li>' + json[gist].description + '</li>')
+								var label = json[gist].description;
+
+								if (!label) {
+									for (label in json[gist]) break;
+								}
+
+								$gists.find('ul').append('<li>' + label + '</li>')
 							}
 						}
 					} else {
