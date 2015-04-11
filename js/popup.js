@@ -46,8 +46,30 @@ $(function() {
 			button.attr('disabled', false).text(text);
 		},
 
-		getListTemplate = function(id, label) {
-			return '<li data-id="' + id + '">' + label + '<span class="gist-label"><span>SECRET</span><span>JavaScript</span></span></li>';
+		getListTemplate = function(id, label, files) {
+			var labels = '',
+				step = 0,
+				max = 2;
+
+			for (var filename in files) {
+				if (files.hasOwnProperty(filename)) {
+					if (!files[filename].language) {
+						continue;
+					}
+
+					if (step < max) {
+						step++;
+					} else {
+						labels += '<span>...</span>';
+
+						break;
+					}
+
+					labels += '<span>' + files[filename].language + '</span>';
+				}
+			}
+
+			return '<li data-id="' + id + '">' + label + '<span class="gist-labels">' + labels +'</span></li>';
 		};
 
 	$gistContainer.on('isIdentified', function() {
@@ -85,7 +107,7 @@ $(function() {
 								for (label in json[gist].files) break;
 							}
 
-							$gists.find('ul').append(getListTemplate(json[gist].id, label));
+							$gists.find('ul').append(getListTemplate(json[gist].id, label, json[gist].files));
 						}
 					}
 				} else {

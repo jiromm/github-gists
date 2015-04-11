@@ -66,14 +66,18 @@
 	box-shadow: inset 0px 1px 0 rgba(255,255,255,.6);
 	border: 1px solid #D7D7D7;
 }
-.gist-label {
+.gists li:hover .gist-labels {
+	background: #e8e8e8;
+}
+.gist-labels {
 	position: absolute;
-	padding: 3px 0 3px 5px;
-	background: #eee;
 	right: 3px;
 	top: 4px;
+	padding: 3px 0 3px 5px;
+	background: #eee;
+	transition: background 0.2s;
 }
-.gist-label > span {
+.gist-labels > span {
 	padding: 1px 3px;
 	margin: 0 2px;
 	color: #847C28;
