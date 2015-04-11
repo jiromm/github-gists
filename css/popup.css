@@ -48,8 +48,7 @@
 	margin-top: 47px;
 }
 .gists li {
-	border: 1px solid #ccc;
-	padding: 0 3px;
+	padding: 0 5px;
 	margin-bottom: 2px;
 	border-radius: 2px;
 	background: #eee;
@@ -58,9 +57,11 @@
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	text-shadow: -1px 1px 0 #fff;
-	transition: all 0.2s;
+	border: 1px solid transparent;
+	transition: background 0.2s;
 }
 .gists li:hover {
 	background: #e8e8e8;
-	border: 1px solid #c3c3c3;
+	box-shadow: inset 0px 1px 0 rgba(255,255,255,.6);
+	border: 1px solid #D7D7D7;
 }
