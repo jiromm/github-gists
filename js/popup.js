@@ -73,6 +73,15 @@ $(function() {
 			}
 
 			return '<li data-id="' + id + '">' + label + '<span class="gist-labels">' + labels +'</span></li>';
+		},
+		getFileTemplate = function(title, content) {
+			return '\
+				<div class="panel panel-primary">\
+					<div class="panel-heading">' + title + '</div>\
+					<div class="panel-body">\
+						<code>' + content + '</code>\
+					</div>\
+				</div>'
 		};
 
 	$gistContainer.on('isIdentified', function() {
@@ -185,7 +194,7 @@ $(function() {
 			_o('haveGists');
 			_o('gists');
 
-			setTimeout(window.location.reload, 100);
+			window.location.reload();
 		});
 
 		$fnRefreshList.on('click', function(e) {
@@ -196,16 +205,28 @@ $(function() {
 			}]);
 		});
 
+		$gist.on('drawFiles', function(e, files) {
+			var fileTemplate = '';
+
+			$files.html('');
+
+			for (var file in files) {
+				if (files.hasOwnProperty(file)) {
+					fileTemplate = getFileTemplate(files[file].filename, 'xxxxxxxxxxx');
+
+					$files.append(fileTemplate);
+				}
+			}
+		});
+
 		$gist.on('drawGist', function(e, gistId) {
 			var json = JSON.parse(o('gists'));
-
-			console.log(json);
-			console.log(gistId);
 
 			for (var gist in json) {
 				if (json.hasOwnProperty(gist)) {
 					if (json[gist].id == gistId) {
 						$description.text(json[gist].description);
+						$(this).trigger('drawFiles', [json[gist].files]);
 
 						break;
 					}
@@ -220,6 +241,13 @@ $(function() {
 			$gist.removeClass('hide');
 
 			$gist.trigger('drawGist', [id]);
+		});
+
+		$gist.on('click', '.back', function(e) {
+			e.preventDefault();
+
+			$gists.removeClass('hide');
+			$gist.addClass('hide');
 		});
 
 		// Entry Point if Identified
