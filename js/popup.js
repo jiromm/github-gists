@@ -44,6 +44,10 @@ $(function() {
 		},
 		unfreezeButton = function(button, text) {
 			button.attr('disabled', false).text(text);
+		},
+
+		getListTemplate = function(id, label) {
+			return '<li data-id="' + id + '">' + label + '<span class="gist-label"><span>SECRET</span><span>JavaScript</span></span></li>';
 		};
 
 	$gistContainer.on('isIdentified', function() {
@@ -62,28 +66,65 @@ $(function() {
 			$errorMessage.find('p').html(message);
 		});
 
+		$(this).on('loadGists', function() {
+			$errorMessage.addClass('hide');
+			$gists.removeClass('hide');
+
+			var haveGists = o('haveGists'),
+				json = JSON.parse(o('gists'));
+
+			if (haveGists) {
+				if (json.length) {
+					$gists.find('ul').html('');
+
+					for (var gist in json) {
+						if (json.hasOwnProperty(gist)) {
+							var label = json[gist].description;
+
+							if (!label) {
+								for (label in json[gist].files) break;
+							}
+
+							$gists.find('ul').append(getListTemplate(json[gist].id, label));
+						}
+					}
+				} else {
+					haveGists = false;
+				}
+			} else {
+				haveGists = false;
+			}
+
+			if (!haveGists) {
+				$self.trigger('showError', ['You have no gists. <a href="' + getOnlineGistsUrl(login) + '" target="_blank"><strong>Add First One</strong></a>.']);
+			}
+		});
+
 		$(this).on('downloadGists', function(e, callback) {
 			$self.trigger('loadingStart');
 
 			$.getJSON(getGistsUrl(login))
 				.done(function(json) {
-					if (json.length) {
-						$gists.find('ul').html('');
+					var gists = [];
 
+					if (json.length) {
 						for (var gist in json) {
 							if (json.hasOwnProperty(gist)) {
-								var label = json[gist].description;
-
-								if (!label) {
-									for (label in json[gist]) break;
-								}
-
-								$gists.find('ul').append('<li>' + label + '</li>')
+								gists.push({
+									'url': json[gist].url,
+									'id': json[gist].id,
+									'html_url': json[gist].html_url,
+									'files': json[gist].files,
+									'public': json[gist].public,
+									'description': json[gist].description,
+									'comments': json[gist].comments
+								});
 							}
 						}
-					} else {
-						$self.trigger('showError', ['You have no gists. <a href="' + getOnlineGistsUrl(login) + '" target="_blank">Add First One</a>.']);
 					}
+
+					o('haveGists', true);
+					o('gists', JSON.stringify(gists));
 				})
 				.fail(function(jqxhr, textStatus, error) {
 					$self.trigger('showError', ['Something went wrong']);
@@ -107,11 +148,6 @@ $(function() {
 			$loading.addClass('hide');
 		});
 
-		$(this).on('loadGists', function() {
-			$errorMessage.addClass('hide');
-			$gists.removeClass('hide');
-		});
-
 		$fnChangeAccount.on('click', function(e) {
 			e.preventDefault();
 
@@ -122,7 +158,7 @@ $(function() {
 			_o('haveGists');
 			_o('gists');
 
-			location.reload();
+			setTimeout(window.location.reload, 100);
 		});
 
 		$fnRefreshList.on('click', function(e) {
@@ -133,6 +169,7 @@ $(function() {
 			}]);
 		});
 
+		// Entry Point if Identified
 		if (o('haveGists')) {
 			$(this).trigger('loadGists');
 		} else {
@@ -142,6 +179,7 @@ $(function() {
 		}
 	});
 
+	// Entry Point
 	if (o('isIdentified')) {
 		$gistContainer.trigger('isIdentified');
 	} else {

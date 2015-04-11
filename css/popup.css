@@ -48,6 +48,7 @@
 	margin-top: 47px;
 }
 .gists li {
+	position: relative;
 	padding: 0 5px;
 	margin-bottom: 2px;
 	border-radius: 2px;
@@ -64,4 +65,20 @@
 	background: #e8e8e8;
 	box-shadow: inset 0px 1px 0 rgba(255,255,255,.6);
 	border: 1px solid #D7D7D7;
+}
+.gist-label {
+	position: absolute;
+	padding: 3px 0 3px 5px;
+	background: #eee;
+	right: 3px;
+	top: 4px;
+}
+.gist-label > span {
+	padding: 1px 3px;
+	margin: 0 2px;
+	color: #847C28;
+	background: #fdffad;
+	border: 1px solid rgba(132, 124, 40, 0.45);
+	font: bold 10px/100% monospace;
+	text-transform: uppercase;
 }
