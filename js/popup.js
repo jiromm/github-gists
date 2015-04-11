@@ -8,6 +8,9 @@ $(function() {
 		$login = $('.login'),
 		$avatar = $('.avatar'),
 		$gists = $('.gists'),
+		$gist = $('.gist'),
+		$description = $('.description'),
+		$files = $('.files'),
 		$loading = $('.loading'),
 		$errorMessage = $('.error-message'),
 
@@ -83,6 +86,7 @@ $(function() {
 		$fnOpenGists.attr('href', getOnlineGistsUrl(login));
 
 		$(this).on('showError', function(e, message) {
+			$gist.addClass('hide');
 			$gists.addClass('hide');
 			$errorMessage.removeClass('hide');
 			$errorMessage.find('p').html(message);
@@ -161,6 +165,7 @@ $(function() {
 		});
 
 		$(this).on('loadingStart', function() {
+			$gist.addClass('hide');
 			$gists.addClass('hide');
 			$errorMessage.addClass('hide');
 			$loading.removeClass('hide');
@@ -189,6 +194,32 @@ $(function() {
 			$(this).trigger('downloadGists', [function() {
 				$self.trigger('loadGists');
 			}]);
+		});
+
+		$gist.on('drawGist', function(e, gistId) {
+			var json = JSON.parse(o('gists'));
+
+			console.log(json);
+			console.log(gistId);
+
+			for (var gist in json) {
+				if (json.hasOwnProperty(gist)) {
+					if (json[gist].id == gistId) {
+						$description.text(json[gist].description);
+
+						break;
+					}
+				}
+			}
+		});
+
+		$gists.on('click', 'li', function() {
+			var id = $(this).attr('data-id');
+
+			$gists.addClass('hide');
+			$gist.removeClass('hide');
+
+			$gist.trigger('drawGist', [id]);
 		});
 
 		// Entry Point if Identified

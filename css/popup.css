@@ -8,6 +8,9 @@
 	width: 100%;
 	background: #fff;
 }
+.heading .panel-heading {
+	padding: 10px 0;
+}
 .identify .form-group,
 .identify .form-control {
 	display: inline-block;
@@ -36,13 +39,11 @@
 .heading-delimiter {
 	margin: 0 0 10px 0;
 }
-.panel-heading {
-	padding: 10px 0;
-}
 .gist-container {
 	min-height: 150px;
 }
 .gists,
+.gist,
 .loading,
 .error-message {
 	margin-top: 47px;
@@ -72,7 +73,7 @@
 .gist-labels {
 	position: absolute;
 	right: 3px;
-	top: 4px;
+	top: -4px;
 	padding: 3px 0 3px 5px;
 	background: #eee;
 	transition: background 0.2s;
@@ -85,4 +86,7 @@
 	border: 1px solid rgba(132, 124, 40, 0.45);
 	font: bold 10px/100% monospace;
 	text-transform: uppercase;
+}
+.description {
+	font-weight: bold;
 }
