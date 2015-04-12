@@ -6,7 +6,8 @@
 
 	"icons": {
 		"24": "assets/24.png",
-		"128": "assets/128.png"
+		"32": "assets/32.png",
+		"120": "assets/120.png"
 	},
 
 	"browser_action": {
