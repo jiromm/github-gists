@@ -211,20 +211,35 @@ $(function() {
 			}]);
 		});
 
+		$gist.on('drawFile', function(e, fileList) {
+			var file = fileList.shift();
+
+			$.get(file.raw_url, function(data) {
+				var fileTemplate = getFileTemplate(file.filename, data);
+
+				$files.append(fileTemplate);
+
+				if (fileList.length) {
+					$gist.trigger('drawFile', [fileList]);
+				}
+			});
+		});
+
 		$gist.on('drawFiles', function(e, files) {
-			var fileTemplate = '';
+			var fileList = [];
 
 			$files.html('');
 
 			for (var file in files) {
 				if (files.hasOwnProperty(file)) {
-					$.get(files[file].raw_url, function(data) {
-						fileTemplate = getFileTemplate(files[file].filename, data);
-
-						$files.append(fileTemplate);
-					});
+					fileList.push({
+						filename: files[file].filename,
+						raw_url: files[file].raw_url
+					})
 				}
 			}
+
+			$gist.trigger('drawFile', [fileList]);
 		});
 
 		$gist.on('drawGist', function(e, gistId) {
