@@ -345,7 +345,11 @@ $(function() {
 			$loginErrorMessage.text(message).removeClass('hide');
 		});
 
-		$loginField.on('input', function() {
+		$loginField.on('keypress', function(e) {
+			if (e.which == 13) {
+				$loginSubmit.trigger('click');
+			}
+
 			$(this).trigger('valid');
 		});
 	}
