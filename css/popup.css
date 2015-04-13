@@ -46,7 +46,7 @@
 }
 .profile {
 	margin: -4px -4px 0 0;
-	padding: 4px;
+	padding: 1px 4px 4px;
 }
 .profile:hover,
 .profile.open {
@@ -54,6 +54,9 @@
 }
 .profile .login:hover {
 	text-decoration: underline;
+}
+.profile a {
+	display: inline-block;
 }
 .avatar {
 	width: 20px;
