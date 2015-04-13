@@ -80,12 +80,12 @@ $(function() {
 
 			return '<li data-id="' + id + '">' + label + '<span class="gist-labels">' + labels +'</span></li>';
 		},
-		getFileTemplate = function(title, content) {
+		getFileTemplate = function(title, content, language) {
 			return '\
 				<div class="panel panel-default">\
 					<div class="panel-heading">' + htmlEntities(title) + '</div>\
 					<div class="panel-body">\
-						<pre>' + htmlEntities(content) + '</pre>\
+						<pre data-language="' + language + '">' + htmlEntities(content) + '</pre>\
 					</div>\
 				</div>'
 		};
@@ -215,9 +215,11 @@ $(function() {
 			var file = fileList.shift();
 
 			$.get(file.raw_url, function(data) {
-				var fileTemplate = getFileTemplate(file.filename, data);
+				var fileTemplate = getFileTemplate(file.filename, data, file.language.toLowerCase());
 
 				$files.append(fileTemplate);
+
+				Rainbow.color();
 
 				if (fileList.length) {
 					$gist.trigger('drawFile', [fileList]);
@@ -234,7 +236,8 @@ $(function() {
 				if (files.hasOwnProperty(file)) {
 					fileList.push({
 						filename: files[file].filename,
-						raw_url: files[file].raw_url
+						raw_url: files[file].raw_url,
+						language: files[file].language
 					})
 				}
 			}

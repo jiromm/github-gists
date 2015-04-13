@@ -113,3 +113,14 @@
 .description {
 	font-weight: bold;
 }
+
+/* code highlighter fix */
+pre .close {
+	font-size: inherit;
+	font-weight: inherit;
+	line-height: inherit;
+	opacity: 1;
+	float: none;
+	color: inherit;
+	text-shadow: none;
+}
