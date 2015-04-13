@@ -31,6 +31,9 @@
 	padding: 14px;
 	line-height: 100%;
 }
+.identify {
+	margin-top: -47px;
+}
 .identify .form-group,
 .identify .form-control {
 	display: inline-block;
