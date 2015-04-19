@@ -209,6 +209,8 @@ $(function() {
 		$fnRefreshList.on('click', function(e) {
 			e.preventDefault();
 
+			$wrapper.removeClass('autowidth');
+
 			$(this).trigger('downloadGists', [function() {
 				$self.trigger('loadGists');
 			}]);
