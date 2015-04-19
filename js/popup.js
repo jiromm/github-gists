@@ -83,7 +83,10 @@ $(function() {
 		getFileTemplate = function(title, content, language) {
 			return '\
 				<div class="panel panel-default">\
-					<div class="panel-heading">' + htmlEntities(title) + '</div>\
+					<div class="panel-heading">' +
+						htmlEntities(title) +
+						'<a class="btn btn-xs btn-default pull-right copy">Copy</a>' +
+					'</div>\
 					<div class="panel-body">\
 						<pre data-language="' + language + '">' + htmlEntities(content) + '</pre>\
 					</div>\
@@ -279,6 +282,33 @@ $(function() {
 			$wrapper.removeClass('autowidth');
 			$gists.removeClass('hide');
 			$gist.addClass('hide');
+		});
+
+		$files.on('click', '.copy', function(e) {
+			e.preventDefault();
+
+			var $self = $(this),
+				code = $(this).closest('.panel').find('pre')[0],
+				range, selection;
+
+			// Make selection
+			selection = window.getSelection();
+			range = document.createRange();
+			range.selectNodeContents(code);
+			selection.removeAllRanges();
+			selection.addRange(range);
+
+			// Copy to clipboard
+			document.execCommand('copy');
+
+			// Deselect
+			selection.empty();
+
+			$(this).text('Copied!');
+
+			setTimeout(function() {
+				$self.text('Copy');
+			}, 1000);
 		});
 
 		// Entry Point if Identified

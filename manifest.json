@@ -2,7 +2,7 @@
 	"name": "Github Gists",
 	"description": "Simple view for github gists",
 	"manifest_version": 2,
-	"version": "1.1",
+	"version": "1.2.0",
 
 	"icons": {
 		"24": "assets/24.png",
